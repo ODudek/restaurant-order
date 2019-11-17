@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  LOGIN_URL: 'api/Auth/login'
+  LOGIN_URL: 'api/Auth/authenticate'
 };
 
 /*

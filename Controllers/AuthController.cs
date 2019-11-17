@@ -1,43 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using restaurant_order.Models;
-
-interface ILoginResponse {
-    bool success { get; set; }
-}
-
-public interface loginValue {
-    string login { get; set; }
-    string password { get; set; }
-}
+using restaurant_order.Services;
 
 namespace restaurant_order.Controllers {
     [Route ("api/[controller]")]
     public class AuthController : Controller {
-        UserContext _ctx;
-        public AuthController (UserContext ctx) {
-            _ctx = ctx;
+        private IUserService _userService;
+        public AuthController (IUserService userService) {
+            _userService = userService;
         }
 
-        [HttpPost ("[action]")]
-        public loginResponse login (loginValue body) {
-            User findUser = _ctx.Users.SingleOrDefault (user => user.login == body.login && user.password == body.password);
-            if (findUser) {
-                return new loginResponse {
-                    success = true
-                };
-            } else {
-                return new loginResponse {
-                    success = false
-                };
-            }
-        }
+        [AllowAnonymous]
+        [HttpPost ("authenticate")]
+        public IActionResult Authenticate ([FromBody] AuthenticateModel model) {
+            var user = _userService.Authenticate (model.login, model.password);
 
-        public class loginResponse : ILoginResponse {
-            public bool success { get; set; }
+            if (user == null)
+                return BadRequest (new { message = "Username or password is incorrect" });
+
+            return Ok (user);
         }
 
     }
