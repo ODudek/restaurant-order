@@ -22,17 +22,21 @@ export class AuthService {
         this.baseUrl = baseUrl;
         this.helper = new JwtHelperService();
     }
-    
+
     public isAuthenticated(): boolean {
         const token = this.getToken();
         if (!token) {
             return false;
         }
-        return this.helper.isTokenExpired(token)
-      }
+        if (!this.helper.isTokenExpired(token)) {
+            this.isLogged.next(true);
+        } else {
+            this.isLogged.next(false);
+        }
+        return true
+    }
 
     public logIn(body: LoginBody) {
-
         return this.http.post(this.baseUrl + environment.LOGIN_URL,
             body
         ).pipe(
@@ -46,11 +50,11 @@ export class AuthService {
     public saveToken(token: string) {
         localStorage.setItem('token', token);
     }
-    
+
     public removeToken() {
         localStorage.removeItem('token')
     }
-    
+
     public getToken() {
         return localStorage.getItem('token');
     }

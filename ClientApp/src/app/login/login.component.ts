@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ export interface IResponse {
     selector: 'app-login',
     templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     invalid = false;
     loading = false;
     loginForm = new FormGroup({
@@ -25,10 +25,15 @@ export class LoginComponent {
     constructor(private authService: AuthService, private router: Router) {
 
     }
+
+    ngOnInit(): void {
+        if (this.authService.isAuthenticated()) {
+            this.router.navigate(['admin']);
+        }
+    }
     public onLogin() {
         if (this.loginForm.valid) {
             this.loading = true;
-            this.invalid = false;
             this.subscription = this.authService.logIn(this.loginForm.value)
                 .subscribe(
                     (response: IResponse) => {

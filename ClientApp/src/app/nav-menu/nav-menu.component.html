@@ -17,6 +17,17 @@
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/fetch-data"]'>Fetch data</a>
           </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]' *ngIf="authService.isAuthenticated()">
+            <a class="nav-link text-dark" [routerLink]='["/admin"]'>Admin panel</a>
+          </li>
+          <li class="nav-item" *ngIf="authService.isAuthenticated()">
+            <button class="btn btn-outline-primary" (click)="logOut()">
+              Wyloguj
+            </button>
+          </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]' *ngIf="!authService.isAuthenticated()">
+            <a class="nav-link text-dark" [routerLink]='["/login"]'>Zaloguj się</a>
+          </li>
         </ul>
       </div>
     </div>
