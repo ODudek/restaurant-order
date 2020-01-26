@@ -1,0 +1,23 @@
+.product-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.product-detail > .btn-outline-secondary {
+    margin-left: 10px;
+}
+
+.product-detail > .text-muted {
+    flex: 1 0 10%;
+}
+
+.image-wrapper {
+    overflow: hidden;
+    max-height: 180px;
+    max-width: 277px;
+}
+
+.card-deck .card {
+    flex: 1 0 20%;
+}

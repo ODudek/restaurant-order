@@ -1,0 +1,14 @@
+<div class="card mb-3 p-3">
+  <figure class="image-wrapper">
+    <img class="card-img-top" [src]="product.image" alt="Card image cap">
+  </figure>
+  <div class="card-body">
+    <h5 class="card-title">{{ product.name }}</h5>
+    <p class="card-text">{{ product.description }}</p>
+  </div>
+  <div class="card-footer product-detail">
+    <small class="text-muted">{{ product.price }}</small>
+    <button class="btn btn-primary">+</button>
+    <button class="btn btn-outline-secondary" *ngIf="authService.isAuthenticated()">Edit</button>
+  </div>
+</div>

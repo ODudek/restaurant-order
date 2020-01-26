@@ -12,6 +12,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 import { LoggedInGuard } from './services/logged-in.guard';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +21,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
-    LoginComponent
+    LoginComponent,
+    ProductListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,7 +33,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'product-list', component: ProductListComponent },
       { path: 'login', component: LoginComponent },
       { path: 'admin', component: CounterComponent, canActivate: [LoggedInGuard] },
     ], {
